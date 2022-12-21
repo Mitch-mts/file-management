@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: file-storage
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/mts_files
+    username: postgres
+    password: BigMitch@123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+  security:
+    jwt:
+      secret: javainuse
+  cloud:
+    config:
+      allow-override: true
+  main:
+    allow-bean-definition-overriding: true
+
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2000MB
+      max-request-size: 2000MB
+
+server:
+  port: 8083
+
+file:
+  uploadDir: ./mts
+  fileTypes: .mp4,.mp3,.pdf,.png,.jpg,.jpeg, .JPEG,.gif,.tif,.MP4,.MP3,.PNG,.JPG,.PDF,.GIF,.TIF,.JFIF,.jfif
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8762/eureka/
