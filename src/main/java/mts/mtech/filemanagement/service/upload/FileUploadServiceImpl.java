@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -31,8 +32,8 @@ public class FileUploadServiceImpl implements FileUploadService {
         Optional.ofNullable(fileUploadRequest).orElseThrow(() -> new InvalidFileUploadRequestException("File upload request cannot be null"));
         this.checkIfFileTypeIsAccepted(fileUploadRequest.getFile());
         String fileName = fileStorageService.storeFile(fileUploadRequest.getFile());
-        File filee = File.createFile(fileName);
-        return fileRepository.save(filee);
+        File file = File.createFile(fileName);
+        return fileRepository.save(file);
     }
 
     @Override
@@ -45,9 +46,9 @@ public class FileUploadServiceImpl implements FileUploadService {
     }
 
     private void checkIfFileTypeIsAccepted(MultipartFile file) {
-        final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        fileStorageProperties.getFileTypes().stream().filter(fileType -> fileName.endsWith(fileType)).findFirst()
-                .orElseThrow(() -> new InvalidFileUploadRequestException("Filee type is not accepted"));
+        final String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+        fileStorageProperties.getFileTypes().stream().filter(fileName::endsWith).findFirst()
+                .orElseThrow(() -> new InvalidFileUploadRequestException("File type is not accepted"));
     }
 
 }

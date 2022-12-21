@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/v1/files")
 @Tag(name = "File upload Apis", description = "Apis for uploading files")
+@CrossOrigin
 public class FileUploadRestController {
     private static final Logger LOGGER= LoggerFactory.getLogger(FileUploadRestController.class);
 

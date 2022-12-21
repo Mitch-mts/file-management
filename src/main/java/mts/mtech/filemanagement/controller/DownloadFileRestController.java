@@ -29,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/files")
 @Tag(name = "Download files Api", description = "Apis for downloading files")
+@CrossOrigin
 public class DownloadFileRestController {
     private final Logger log = LoggerFactory.getLogger(DownloadFileRestController.class);
     private final DownloadFileService downloadFileService;

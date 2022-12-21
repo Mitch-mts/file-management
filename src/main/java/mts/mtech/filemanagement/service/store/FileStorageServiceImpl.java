@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Mitch
@@ -30,7 +31,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public String storeFile(MultipartFile file) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         this.checkIfFileNameContainsInvalidCharacters(fileName);
         fileName = this.generateUniqueFileName(fileName);
         Path targetLocation = getFileStorageLocation().resolve(fileName);
@@ -80,9 +81,8 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
 
     }
-
     private String generateUniqueFileName(String fileName){
-       return (java.sql.Timestamp.valueOf(LocalDateTime.now())+"_"+fileName).replace(":","").replace(" ", "_").trim();
+        return fileName;
     }
 
 

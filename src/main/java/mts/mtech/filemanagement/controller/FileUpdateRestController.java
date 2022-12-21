@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/v1/files")
 @Tag(name = "File Update Apis", description = "Apis for deleting files")
+@CrossOrigin
 public class FileUpdateRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUpdateRestController.class);
 
