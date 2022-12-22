@@ -1,0 +1,33 @@
+version: '2.1'
+
+services:
+  app:
+    image: 'files_api:latest'
+    build:
+      context: .
+    ports:
+      - "8083:8083"
+    container_name: files_api
+    depends_on:
+      - db
+    networks:
+      - geforce
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/files
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=BigMitch@123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: files_db
+    networks:
+      - geforce
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=BigMitch@123
+      - POSTGRES_DB=files
+
+networks:
+  geforce:
+    external: true
