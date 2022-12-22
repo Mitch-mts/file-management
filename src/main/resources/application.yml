@@ -34,7 +34,16 @@ file:
   uploadDir: ./mts
   fileTypes: .mp4,.mp3,.pdf,.png,.jpg,.jpeg, .JPEG,.gif,.tif,.MP4,.MP3,.PNG,.JPG,.PDF,.GIF,.TIF,.JFIF,.jfif
 
+# Discovery Server Access
 eureka:
+  instance:
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
   client:
+    registerWithEureka: true
+    fetchRegistry: false
     serviceUrl:
       defaultZone: http://localhost:8762/eureka/
+    healthcheck:
+      enabled: true
