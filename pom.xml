@@ -121,6 +121,14 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>files</finalName>
     </build>
+
+    <repositories>
+        <repository>
+            <id>MyGet</id>
+            <url>https://www.myget.org/F/error-handler/maven/</url>
+        </repository>
+    </repositories>
 
 </project>
