@@ -13,7 +13,7 @@ services:
     networks:
       - geforce
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/files
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mts_files
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=BigMitch@123
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -26,7 +26,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=BigMitch@123
-      - POSTGRES_DB=files
+      - POSTGRES_DB=mts_files
 
 networks:
   geforce:

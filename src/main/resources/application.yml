@@ -47,3 +47,17 @@ eureka:
       defaultZone: http://localhost:8762/eureka/
     healthcheck:
       enabled: true
+
+
+#http://localhost:8083/actuator/prometheus
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+
