@@ -1,5 +1,6 @@
 package mts.mtech.filemanagement.service.configuration;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,15 +14,12 @@ import java.util.List;
 
 @Component
 public class FileStorageProperties {
+    @Getter
     @Value("${file.uploadDir}")
     private String uploadRoot="";
 
     @Value("${file.fileTypes}")
     private String fileTypes="";
-
-    public String getUploadRoot() {
-        return uploadRoot;
-    }
 
     public List<String> getFileTypes() {
         return Arrays.asList(fileTypes.split(","));

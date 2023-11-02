@@ -1,6 +1,7 @@
 package mts.mtech.filemanagement.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import mts.mtech.filemanagement.dto.FileDto;
 import mts.mtech.filemanagement.model.File;
 import mts.mtech.filemanagement.service.store.FileNotFoundException;
@@ -26,9 +27,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/v1/files")
 @Tag(name = "File Update Apis", description = "Apis for deleting files")
 @CrossOrigin
+@Slf4j
 public class FileUpdateRestController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUpdateRestController.class);
-
     private final FileUpdateService fileUpdateService;
 
     @Autowired
@@ -38,7 +38,7 @@ public class FileUpdateRestController {
 
     @PutMapping(value = "/{fileId}")
     public FileDto updateFile(@RequestParam("file") MultipartFile file, @PathVariable("fileId")Long fileId) {
-        LOGGER.info("Uploading file: {} ", file);
+        log.info("Uploading file: {} ", file);
 
         FileUpdateRequest fileUpdateRequest = FileUpdateRequest.createFileUpdateRequest(fileId, file);
 
@@ -51,15 +51,13 @@ public class FileUpdateRestController {
     public FileDto updateUserFile(@RequestParam("file") MultipartFile file,
                                   @PathVariable("userId") Long userId,
                                   @PathVariable("fileId") Long fileId) {
-        LOGGER.info("Uploading file: {} ", file);
-        LOGGER.info("Uploading userid: {} ", userId);
-        LOGGER.info("Uploading fileid: {} ", fileId);
+        log.info("Uploading file: {} ", file);
+        log.info("Uploading userid: {} ", userId);
+        log.info("Uploading fileid: {} ", fileId);
 
         FileUpdateRequest fileUpdateRequest = FileUpdateRequest.createFileUpdateRequest(fileId, file);
-
-        File savedFilee = fileUpdateService.updateUserFile(fileUpdateRequest, userId);
-
-        return FileDto.of(savedFilee);
+        File savedFile = fileUpdateService.updateUserFile(fileUpdateRequest, userId);
+        return FileDto.of(savedFile);
     }
 
     private void checkForErrors(Errors errors) {

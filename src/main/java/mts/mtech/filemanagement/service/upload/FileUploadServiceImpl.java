@@ -21,7 +21,9 @@ public class FileUploadServiceImpl implements FileUploadService {
     private final FileStorageService fileStorageService;
     private final FileStorageProperties fileStorageProperties;
 
-    public FileUploadServiceImpl(FileRepository fileRepository, FileStorageService fileStorageService, FileStorageProperties fileStorageProperties) {
+    public FileUploadServiceImpl(FileRepository fileRepository,
+                                 FileStorageService fileStorageService,
+                                 FileStorageProperties fileStorageProperties) {
         this.fileRepository = fileRepository;
         this.fileStorageService = fileStorageService;
         this.fileStorageProperties = fileStorageProperties;
@@ -29,8 +31,9 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public File uploadFile(FileUploadRequest fileUploadRequest) {
-        Optional.ofNullable(fileUploadRequest).orElseThrow(() -> new InvalidFileUploadRequestException("File upload request cannot be null"));
-        this.checkIfFileTypeIsAccepted(fileUploadRequest.getFile());
+        Optional.ofNullable(fileUploadRequest)
+                .orElseThrow(() -> new InvalidFileUploadRequestException("File upload request cannot be null"));
+        checkIfFileTypeIsAccepted(fileUploadRequest.getFile());
         String fileName = fileStorageService.storeFile(fileUploadRequest.getFile());
         File file = File.createFile(fileName);
         return fileRepository.save(file);
@@ -45,7 +48,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         return fileRepository.save(filee);
     }
 
-    private void checkIfFileTypeIsAccepted(MultipartFile file) {
+    protected void checkIfFileTypeIsAccepted(MultipartFile file) {
         final String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         fileStorageProperties.getFileTypes().stream().filter(fileName::endsWith).findFirst()
                 .orElseThrow(() -> new InvalidFileUploadRequestException("File type is not accepted"));

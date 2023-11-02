@@ -32,11 +32,11 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public String storeFile(MultipartFile file) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        this.checkIfFileNameContainsInvalidCharacters(fileName);
-        fileName = this.generateUniqueFileName(fileName);
+        checkIfFileNameContainsInvalidCharacters(fileName);
+        fileName = generateUniqueFileName(fileName);
         Path targetLocation = getFileStorageLocation().resolve(fileName);
-        this.createDirectoriesIfThereDoNotExist(targetLocation);
-        this.persistFile(file, targetLocation);
+        createDirectoriesIfThereDoNotExist(targetLocation);
+        persistFile(file, targetLocation);
         return fileName;
     }
 

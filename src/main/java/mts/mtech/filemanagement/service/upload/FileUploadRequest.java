@@ -15,7 +15,7 @@ public class FileUploadRequest {
         this.file = file;
     }
 
-    public static FileUploadRequest createFileUploadRequest(MultipartFile file) {
+    public static FileUploadRequest of(MultipartFile file) {
         checkNotNull(file,"Filee is required");
         return new FileUploadRequest(file);
     }

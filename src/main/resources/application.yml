@@ -3,7 +3,7 @@ spring:
     name: file-storage
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/mts_files
+    url: jdbc:postgresql://localhost:5432/mts_files?createDatabaseIfNotExist=true
     username: postgres
     password: BigMitch@123
   jpa:
@@ -32,7 +32,7 @@ server:
 
 file:
   uploadDir: ./mts
-  fileTypes: .mp4,.mp3,.pdf,.png,.jpg,.jpeg, .JPEG,.gif,.tif,.MP4,.MP3,.PNG,.JPG,.PDF,.GIF,.TIF,.JFIF,.jfif
+  fileTypes: .mp4,.mp3,.pdf,.png,.jpg,.jpeg, .JPEG,.gif,.tif,.MP4,.MP3,.PNG,.JPG,.PDF,.GIF,.TIF,.JFIF,.jfif, .xlsx, .csv
 
 # Discovery Server Access
 eureka:
@@ -41,7 +41,7 @@ eureka:
     lease-renewal-interval-in-seconds: 1
     lease-expiration-duration-in-seconds: 2
   client:
-    registerWithEureka: true
+    registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://localhost:8762/eureka/
@@ -61,3 +61,6 @@ management:
       exposure:
         include: prometheus
 
+springdoc:
+  swagger-ui:
+    enable-multipart: true

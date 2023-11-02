@@ -1,14 +1,13 @@
 package mts.mtech.filemanagement.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import mts.mtech.filemanagement.dto.FileDto;
 import mts.mtech.filemanagement.model.File;
 import mts.mtech.filemanagement.service.store.FileStorageException;
 import mts.mtech.filemanagement.service.upload.FileUploadRequest;
 import mts.mtech.filemanagement.service.upload.FileUploadService;
 import mts.mtech.filemanagement.service.upload.InvalidFileUploadRequestException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/v1/files")
 @Tag(name = "File upload Apis", description = "Apis for uploading files")
 @CrossOrigin
+@Slf4j
 public class FileUploadRestController {
-    private static final Logger LOGGER= LoggerFactory.getLogger(FileUploadRestController.class);
-
     private final FileUploadService fileUploadService;
 
     @Autowired
@@ -34,25 +32,19 @@ public class FileUploadRestController {
     }
 
     @PostMapping
-    public FileDto uploadFile(@RequestParam("file") MultipartFile file){
-        LOGGER.info("Uploading file: {} ", file);
-
-        FileUploadRequest fileUploadRequest = FileUploadRequest.createFileUploadRequest(file);
-
-        File savedFilee = fileUploadService.uploadFile(fileUploadRequest);
-
-        return FileDto.of(savedFilee);
+    public FileDto uploadFile(@RequestPart("file") MultipartFile file){
+        log.info("Uploading file: {} ", file);
+        FileUploadRequest fileUploadRequest = FileUploadRequest.of(file);
+        File savedFile = fileUploadService.uploadFile(fileUploadRequest);
+        return FileDto.of(savedFile);
     }
 
     @PostMapping(value = "/user-id/{userId}")
     public FileDto uploadUserFile(@RequestParam("file") MultipartFile file, @PathVariable("userId")Long userId){
-        LOGGER.info("Uploading file: {} ", file);
-
-        FileUploadRequest fileUploadRequest = FileUploadRequest.createFileUploadRequest(file);
-
-        File savedFilee = fileUploadService.uploadUserFile(fileUploadRequest, userId);
-
-        return FileDto.of(savedFilee);
+        log.info("Uploading file: {} ", file);
+        FileUploadRequest fileUploadRequest = FileUploadRequest.of(file);
+        File savedFile = fileUploadService.uploadUserFile(fileUploadRequest, userId);
+        return FileDto.of(savedFile);
     }
 
 
