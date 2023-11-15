@@ -41,7 +41,7 @@ eureka:
     lease-renewal-interval-in-seconds: 1
     lease-expiration-duration-in-seconds: 2
   client:
-    registerWithEureka: false
+    registerWithEureka: true
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://localhost:8762/eureka/
@@ -64,3 +64,11 @@ management:
 springdoc:
   swagger-ui:
     enable-multipart: true
+
+logging:
+  file:
+    name: mts/logs/files.log
+  level:
+    root: info
+    mts.mtech.filemanagement: debug
+

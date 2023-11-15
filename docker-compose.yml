@@ -30,4 +30,4 @@ services:
 
 networks:
   geforce:
-    external: true
+    external: false
