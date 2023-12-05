@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2.3'
 
 services:
   app:
@@ -17,7 +17,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=BigMitch@123
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-
+      - SPRING_APPLICATION_NAME=file-management
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://172.21.0.2:8762/eureka/
   db:
     image: 'postgres:13.1-alpine'
     container_name: files_db
