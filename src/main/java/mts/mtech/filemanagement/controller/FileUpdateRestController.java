@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,18 +37,15 @@ public class FileUpdateRestController {
         this.fileUpdateService = fileUpdateService;
     }
 
-    @PutMapping(value = "/{fileId}")
+    @PutMapping(value = "/{fileId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public FileDto updateFile(@RequestParam("file") MultipartFile file, @PathVariable("fileId")Long fileId) {
         log.info("Uploading file: {} ", file);
-
         FileUpdateRequest fileUpdateRequest = FileUpdateRequest.createFileUpdateRequest(fileId, file);
-
         File savedFilee = fileUpdateService.updateFile(fileUpdateRequest);
-
         return FileDto.of(savedFilee);
     }
 
-    @PutMapping(value = "/file-id/{fileId}/user-id/{userId}")
+    @PutMapping(value = "/file-id/{fileId}/user-id/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public FileDto updateUserFile(@RequestParam("file") MultipartFile file,
                                   @PathVariable("userId") Long userId,
                                   @PathVariable("fileId") Long fileId) {
@@ -60,17 +58,6 @@ public class FileUpdateRestController {
         return FileDto.of(savedFile);
     }
 
-    private void checkForErrors(Errors errors) {
-        if (errors.hasErrors()) {
-
-            String message = errors.getAllErrors()
-                    .stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.joining(","));
-
-            throw new InvalidFileUpdateRequestException(message);
-        }
-    }
 
     @ExceptionHandler(FileNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
