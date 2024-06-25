@@ -94,7 +94,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
 
     private Path getFileStorageLocation() {
-        return Paths.get(this.fileStorageProperties.getUploadRoot())
+        return Paths.get(this.fileStorageProperties.getUploadRoute())
                 .toAbsolutePath().normalize();
     }
 

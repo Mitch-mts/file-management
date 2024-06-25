@@ -10,6 +10,7 @@ import mts.mtech.filemanagement.service.upload.FileUploadService;
 import mts.mtech.filemanagement.service.upload.InvalidFileUploadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,15 +32,15 @@ public class FileUploadRestController {
         this.fileUploadService = fileUploadService;
     }
 
-    @PostMapping
-    public FileDto uploadFile(@RequestPart("file") MultipartFile file){
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public FileDto uploadFile(@RequestParam("file") MultipartFile file){
         log.info("Uploading file: {} ", file);
         FileUploadRequest fileUploadRequest = FileUploadRequest.of(file);
         File savedFile = fileUploadService.uploadFile(fileUploadRequest);
         return FileDto.of(savedFile);
     }
 
-    @PostMapping(value = "/user-id/{userId}")
+    @PostMapping(value = "/user-id/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public FileDto uploadUserFile(@RequestParam("file") MultipartFile file, @PathVariable("userId")Long userId){
         log.info("Uploading file: {} ", file);
         FileUploadRequest fileUploadRequest = FileUploadRequest.of(file);

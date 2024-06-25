@@ -3,7 +3,7 @@ spring:
     name: file-storage
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/mts_files?createDatabaseIfNotExist=true
+    url: jdbc:postgresql://localhost:5432/mts_files
     username: postgres
     password: BigMitch@123
   jpa:
@@ -41,7 +41,7 @@ eureka:
     lease-renewal-interval-in-seconds: 1
     lease-expiration-duration-in-seconds: 2
   client:
-    registerWithEureka: true
+    registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://localhost:8762/eureka/

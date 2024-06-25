@@ -16,7 +16,7 @@ import java.util.List;
 public class FileStorageProperties {
     @Getter
     @Value("${file.uploadDir}")
-    private String uploadRoot="";
+    private String uploadRoute="";
 
     @Value("${file.fileTypes}")
     private String fileTypes="";
